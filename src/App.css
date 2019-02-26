@@ -1,26 +1,16 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+  padding: 0em 0em 0.5em 0em;
+  font-family: "Dubai Light";
 }
 
 .App-header {
   background-color: #282c34;
-  min-height: 100vh;
+  min-height: 20vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
-}
-
-.App-link {
-  color: #61dafb;
 }
 
 @keyframes App-logo-spin {
@@ -30,4 +20,41 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.bgImg {
+  width: 100%;
+}
+
+.bgImgDiv {
+  max-height: 28vh;
+  overflow: hidden;
+  margin: 0.5em 0em 0em;
+}
+
+.btn {
+  background-color: #007bff;
+  border: none;
+  border-radius: .25rem;
+  color: white;
+  display: inline-block;
+  line-height: 1.5;
+  margin: 1em 0em;
+  padding: .375rem .75rem;
+}
+
+.container {
+  background: #eaeaea;
+  width: 42%;
+  margin: 1% 0.5% 0%;
+  min-width: 20pc;
+  text-align: left;
+  padding-left: 4em;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: left;
+  flex-wrap: wrap;
+  margin: 0% 15%;
 }
