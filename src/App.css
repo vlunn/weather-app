@@ -6,11 +6,12 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 20vh;
+  min-height: 22vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   color: white;
+  margin-bottom: 3vh;
 }
 
 @keyframes App-logo-spin {
@@ -24,12 +25,13 @@
 
 .bgImg {
   width: 100%;
+  opacity: 0.9;
 }
 
 .bgImgDiv {
-  max-height: 28vh;
+  max-height: 22vh;
   overflow: hidden;
-  margin: 0.5em 0em 0em;
+  margin: 4vh 0 0vh;
 }
 
 .btn {
