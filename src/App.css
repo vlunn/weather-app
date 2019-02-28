@@ -14,15 +14,6 @@
   margin-bottom: 3vh;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .bgImg {
   width: 100%;
   opacity: 0.9;
