@@ -21,15 +21,23 @@ class App extends Component {
 }
 
 class InteractiveContents extends React.Component {
+  /* Aggregator/parent class for interactive components in the middle of the page.
+   * Stores the state. */
+
   constructor(props) {
     super(props);
+
     this.handleCityChange = this.handleCityChange.bind(this);
     this.handleTemperatureChange = this.handleTemperatureChange.bind(this);
     this.handleSubmitSearch = this.handleSubmitSearch.bind(this);
     this.handleStoreCity = this.handleStoreCity.bind(this);
+
+    // The state of the page consists of these three parts: city name, it's temperature
+    // and a list of the cities user wants to store.
     this.state = {city: '', temperature: '', storedCities: []};
   }
 
+  // Update state when user types in the input field
   handleCityChange(newCity) {
     this.setState({city: newCity});
   }
@@ -38,6 +46,8 @@ class InteractiveContents extends React.Component {
     this.setState({temperature: newTemperature});
   }
 
+  // Make query to weather data API to get weather information
+  // for the current city candidate:
   handleSubmitSearch(event) {
     const city = this.state.city;
     const url = 'data/2.5/weather/?q=' + city + '&appid=1612250bcac7dd8271eb41e7a93c97de';
@@ -59,8 +69,8 @@ class InteractiveContents extends React.Component {
 
     httpObj.send(null);
 
-    event.preventDefault();
     this.setState({temperature: fetchedTemperature});
+    event.preventDefault();  // Prevent page reload
   }
 
   handleStoreCity(event) {
@@ -95,13 +105,16 @@ class InteractiveContents extends React.Component {
           title="Stored cities"
           storedCities={this.state.storedCities}
           btnTitle="Display" />
-        <EmptyBlock />
+
+          <div className={"container"} /* Empty block for visual balance */ />
       </div>
     );
   }
 }
 
 class SearchCityBox extends React.Component {
+  /** Container class for an input field and query button for querying weather data for a given city. */
+
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
@@ -131,6 +144,8 @@ class SearchCityBox extends React.Component {
 }
 
 class DisplayBox extends React.Component {
+  /** Container class for displaying queried weather data for a city. */
+
   constructor(props) {
     super(props);
     this.handleStoreCity = this.handleStoreCity.bind(this);
@@ -156,16 +171,14 @@ class DisplayBox extends React.Component {
 }
 
 class ListingBox extends React.Component {
+  /** Container class for listing all the towns the user has saved in the UI. */
+
   render() {
-    let output = '';
     const cities = this.props.storedCities;
 
-    if (cities.length > 0) {
-      output = <p>{cities.join(" ")}</p>;
-    }
-    else {
-      output = <p>No stored cities yet.</p>;
-    }
+    let output = (cities.length > 0) ?
+      <p>{cities.join(" ")}</p> :
+      <p>No stored cities yet.</p>;
 
     return (
       <div className={"container"}>
@@ -174,10 +187,6 @@ class ListingBox extends React.Component {
       </div>
     );
   }
-}
-
-function EmptyBlock() {
-  return (<div className={"container"} />);
 }
 
 export default App;
