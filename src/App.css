@@ -35,12 +35,11 @@
 }
 
 .btn {
-  background-color: #007bff;
+  background-color: #3999ff;
   border: none;
   border-radius: .25rem;
   color: white;
   display: inline-block;
-  line-height: 1.5;
   margin: 1em 0em;
   padding: .375rem .75rem;
 }
@@ -51,7 +50,7 @@
   margin: 1% 0.5% 0%;
   min-width: 20pc;
   text-align: left;
-  padding-left: 4em;
+  padding: 0em 0em 1em 4em;
 }
 
 .flex-container {
@@ -59,4 +58,8 @@
   justify-content: left;
   flex-wrap: wrap;
   margin: 0% 15%;
+}
+
+.inputGroup {
+  border: None;
 }
