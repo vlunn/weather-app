@@ -25,8 +25,9 @@ class InteractiveContents extends React.Component {
     super(props);
     this.handleCityChange = this.handleCityChange.bind(this);
     this.handleTemperatureChange = this.handleTemperatureChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = {city: '', temperature: ''};
+    this.handleSubmitSearch = this.handleSubmitSearch.bind(this);
+    this.handleStoreCity = this.handleStoreCity.bind(this);
+    this.state = {city: '', temperature: '', storedCities: []};
   }
 
   handleCityChange(newCity) {
@@ -37,7 +38,7 @@ class InteractiveContents extends React.Component {
     this.setState({temperature: newTemperature});
   }
 
-  handleSubmit(event) {
+  handleSubmitSearch(event) {
     const city = this.state.city;
     const url = 'data/2.5/weather/?q=' + city + '&appid=1612250bcac7dd8271eb41e7a93c97de';
     const httpObj = new XMLHttpRequest();
@@ -52,6 +53,7 @@ class InteractiveContents extends React.Component {
       }
       else {
         console.log("Something went wrong. Did you remember to type in a city name before search?");
+        fetchedTemperature = '';
       }
     };
 
@@ -59,6 +61,15 @@ class InteractiveContents extends React.Component {
 
     event.preventDefault();
     this.setState({temperature: fetchedTemperature});
+  }
+
+  handleStoreCity(event) {
+    let cityToAdd = this.state.city;
+    let storedCities = this.state.storedCities;
+
+    if (cityToAdd !== '' && storedCities.indexOf(cityToAdd) < 0) {
+      this.setState({storedCities: (this.state.storedCities.concat([cityToAdd]))});
+    }
   }
 
   render() {
@@ -69,18 +80,20 @@ class InteractiveContents extends React.Component {
           title="Search city temperatures"
           btnTitle="Search"
           changeFunction={this.handleCityChange}
-          submitFunction={this.handleSubmit}
+          submitFunction={this.handleSubmitSearch}
           city={parentCity} />
 
         <DisplayBox
           title="Temperature"
           btnTitle="Save"
           changeFunction={this.handleTemperatureChange}
+          submitFunction={this.handleStoreCity}
           temperature={this.state.temperature}
           city={this.state.city} />
 
         <ListingBox
           title="Stored cities"
+          storedCities={this.state.storedCities}
           btnTitle="Display" />
         <EmptyBlock />
       </div>
@@ -92,14 +105,14 @@ class SearchCityBox extends React.Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmitSearch = this.handleSubmitSearch.bind(this);
   }
 
   handleChange(event) {
     this.props.changeFunction(event.target.value);
   }
 
-  handleSubmit(event) {
+  handleSubmitSearch(event) {
     this.props.submitFunction(event);
   }
 
@@ -110,7 +123,7 @@ class SearchCityBox extends React.Component {
         Type in a city:
         <fieldset className={'inputGroup'}>
           <input type="text" value={this.props.city} onChange={this.handleChange} /><br/>
-          <input type="submit" value={this.props.btnTitle} className={'btn'} onClick={this.handleSubmit}/>
+          <input type="submit" value={this.props.btnTitle} className={'btn'} onClick={this.handleSubmitSearch}/>
         </fieldset>
       </div>
     );
@@ -118,15 +131,25 @@ class SearchCityBox extends React.Component {
 }
 
 class DisplayBox extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleStoreCity = this.handleStoreCity.bind(this);
+  }
+
+  handleStoreCity(event) {
+    this.props.submitFunction(event);
+  }
+
   render() {
     let output = (this.props.temperature !== '') ?
-      <p>City: {this.props.city}<br/>temperature: {this.props.temperature} F</p> :
-      <p>Search for a city!</p>;
+      <p>City: {this.props.city}<br/>Temperature: {this.props.temperature} F</p> :
+      <p>Search for a new city!</p>;
 
     return (
       <div className={'container'}>
         <h2>{this.props.title}</h2>
         {output}
+        <input type="submit" value={this.props.btnTitle} className={'btn'} onClick={this.handleStoreCity}/>
       </div>
     );
   }
@@ -134,10 +157,20 @@ class DisplayBox extends React.Component {
 
 class ListingBox extends React.Component {
   render() {
+    let output = '';
+    const cities = this.props.storedCities;
+
+    if (cities.length > 0) {
+      output = <p>{cities.join(" ")}</p>;
+    }
+    else {
+      output = <p>No stored cities yet.</p>;
+    }
+
     return (
       <div className={"container"}>
         <h2>{this.props.title}</h2>
-        <div>-- Listaus --</div>
+        {output}
       </div>
     );
   }

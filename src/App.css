@@ -46,11 +46,11 @@
 
 .container {
   background: #eaeaea;
-  width: 42%;
+  width: 36%;
   margin: 1% 0.5% 0%;
   min-width: 20pc;
   text-align: left;
-  padding: 0em 0em 1em 4em;
+  padding: 0em 4em 1em 4em;
 }
 
 .flex-container {
